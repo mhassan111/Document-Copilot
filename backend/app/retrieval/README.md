@@ -59,8 +59,8 @@ All retrieval tuning lives in `app/config.py` and can be overridden via environm
 | `retrieval_fts_keyword_min` | `3` | Minimum extracted FTS terms |
 | `retrieval_fts_keyword_max` | `5` | Maximum extracted FTS terms |
 | `retrieval_fts_keyword_fast_path_tokens` | `5` | Skip keyword LLM when query is this short |
-| `openai_embedding_model` | `"text-embedding-3-small"` | Model used for live query embeddings |
-| `openai_embedding_dimensions` | `1536` | Embedding width; must match ingested chunk vectors |
+| `gemini_embedding_model` | `"text-embedding-3-small"` | Model used for live query embeddings |
+| `gemini_embedding_dimensions` | `1536` | Embedding width; must match ingested chunk vectors |
 
 ### `DocumentRetriever.search` parameters
 

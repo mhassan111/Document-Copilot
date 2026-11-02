@@ -65,7 +65,7 @@ class GroundingJudge(Protocol):
 
 class OpenAIGroundingJudge:
     def __init__(self) -> None:
-        self._client = OpenAI(api_key=settings.openai_api_key)
+        self._client = OpenAI(base_url=settings.gemini_base_url,api_key=settings.gemini_api_key)
 
     async def judge(
         self,
@@ -78,7 +78,7 @@ class OpenAIGroundingJudge:
         cases: list[CitationGroundingCase],
     ) -> list[CitationGroundingDecision]:
         response = self._client.chat.completions.parse(
-            model=settings.openai_grounding_model,
+            model=settings.gemini_grounding_model,
             temperature=0,
             messages=[
                 {"role": "system", "content": _GROUNDING_JUDGE_SYSTEM_PROMPT},

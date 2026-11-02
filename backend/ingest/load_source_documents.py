@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from contextlib import aclosing
 from datetime import UTC, date, datetime
 from pathlib import Path
 

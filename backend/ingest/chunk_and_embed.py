@@ -65,8 +65,8 @@ def _delete_chunks(session: Session, document_id) -> None:
 
 
 def _document_tables_from_records(
-    document_id,
-    records: list[ChunkRecord],
+        document_id,
+        records: list[ChunkRecord],
 ) -> list[DocumentTable]:
     tables_by_index: dict[int, DocumentTable] = {}
     for record in records:
@@ -92,13 +92,13 @@ def _document_tables_from_records(
 
 
 def ingest_document(
-    session: Session,
-    document: SourceDocument,
-    *,
-    max_chunks: int | None = None,
-    dry_run: bool = False,
-    skip_existing: bool = True,
-    force: bool = False,
+        session: Session,
+        document: SourceDocument,
+        *,
+        max_chunks: int | None = None,
+        dry_run: bool = False,
+        skip_existing: bool = True,
+        force: bool = False,
 ) -> int:
     if force and not dry_run:
         _delete_chunks(session, document.id)
@@ -164,12 +164,12 @@ def ingest_document(
 
 
 def ingest_accessions(
-    accessions: list[str],
-    *,
-    max_chunks: int | None = None,
-    dry_run: bool = False,
-    skip_existing: bool = True,
-    force: bool = False,
+        accessions: list[str],
+        *,
+        max_chunks: int | None = None,
+        dry_run: bool = False,
+        skip_existing: bool = True,
+        force: bool = False,
 ) -> IngestCounts:
     engine = create_engine(settings.sqlalchemy_database_url)
     counts = IngestCounts()
@@ -188,10 +188,10 @@ def ingest_accessions(
                 )
 
             if (
-                not dry_run
-                and not force
-                and skip_existing
-                and _document_has_chunks(session, document.id)
+                    not dry_run
+                    and not force
+                    and skip_existing
+                    and _document_has_chunks(session, document.id)
             ):
                 print(f"Skipping existing chunks for {accession}")
                 counts = IngestCounts(
@@ -219,11 +219,11 @@ def ingest_accessions(
 
 
 def ingest_all(
-    *,
-    max_chunks: int | None = None,
-    dry_run: bool = False,
-    skip_existing: bool = True,
-    force: bool = False,
+        *,
+        max_chunks: int | None = None,
+        dry_run: bool = False,
+        skip_existing: bool = True,
+        force: bool = False,
 ) -> IngestCounts:
     accessions = [accession for accession, _ in iter_all_html_paths()]
     return ingest_accessions(

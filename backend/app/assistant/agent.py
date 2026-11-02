@@ -29,8 +29,11 @@ def get_document_agent() -> Agent[DocumentAgentDeps, GroundedAnswer]:
     global _document_agent
     if _document_agent is None:
         model = OpenAIChatModel(
-            settings.openai_chat_model,
-            provider=OpenAIProvider(api_key=settings.openai_api_key),
+            settings.gemini_chat_model,
+            provider=OpenAIProvider(
+                base_url=settings.gemini_base_url,
+                api_key=settings.gemini_api_key,
+            ),
         )
         _document_agent = Agent(
             model,
@@ -45,13 +48,13 @@ def get_document_agent() -> Agent[DocumentAgentDeps, GroundedAnswer]:
 def run_document_agent(query: str, deps: DocumentAgentDeps) -> GroundedAnswer:
     emit_agent_start(
         deps,
-        model=settings.openai_chat_model,
-        request_limit=settings.openai_agent_request_limit,
+        model=settings.gemini_chat_model,
+        request_limit=settings.gemini_agent_request_limit,
     )
     result = get_document_agent().run_sync(
         query,
         deps=deps,
-        usage_limits=UsageLimits(request_limit=settings.openai_agent_request_limit),
+        usage_limits=UsageLimits(request_limit=settings.gemini_agent_request_limit),
     )
     usage = result.usage
     emit_agent_done(

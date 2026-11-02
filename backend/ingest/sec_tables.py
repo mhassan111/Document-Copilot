@@ -365,14 +365,14 @@ def _units_from_text(texts: list[str]) -> str | None:
 
 
 def _normalize_rows(
-    raw_rows: list[list[_RawCell]],
+        raw_rows: list[list[_RawCell]],
 ) -> tuple[list[TableColumn], list[TableRow]] | None:
     header_row = _first_text_row(raw_rows)
     if header_row is None:
         return None
 
     header_tokens = _nonempty_texts(header_row)
-    data_rows = raw_rows[raw_rows.index(header_row) + 1 :]
+    data_rows = raw_rows[raw_rows.index(header_row) + 1:]
     if "Change" in header_tokens:
         return _normalize_sales_change_table(header_tokens, data_rows)
     return _normalize_simple_table(header_tokens, data_rows)
@@ -390,8 +390,8 @@ def _nonempty_texts(row: list[_RawCell]) -> list[str]:
 
 
 def _normalize_sales_change_table(
-    header_tokens: list[str],
-    raw_rows: list[list[_RawCell]],
+        header_tokens: list[str],
+        raw_rows: list[list[_RawCell]],
 ) -> tuple[list[TableColumn], list[TableRow]] | None:
     data_headers: list[str] = []
     last_year: str | None = None
@@ -430,7 +430,7 @@ def _sales_change_row(row: list[_RawCell], *, expected_values: int) -> TableRow 
         if not text or consumed == 0:
             index += 1
             continue
-        facts = tuple(fact for cell in tokens[index : index + consumed] for fact in cell.facts)
+        facts = tuple(fact for cell in tokens[index: index + consumed] for fact in cell.facts)
         values.append(TableCell(text=text, facts=facts))
         index += consumed
 
@@ -480,8 +480,8 @@ def _consume_change(cells: list[_RawCell]) -> tuple[str | None, int]:
 
 
 def _normalize_simple_table(
-    header_tokens: list[str],
-    raw_rows: list[list[_RawCell]],
+        header_tokens: list[str],
+        raw_rows: list[list[_RawCell]],
 ) -> tuple[list[TableColumn], list[TableRow]] | None:
     columns = _simple_columns(header_tokens)
     expected_values = len(columns) - 1
@@ -498,7 +498,7 @@ def _normalize_simple_table(
             if not text:
                 text = _normalize_value_cell(tokens[index].text)
                 consumed = 1
-            facts = tuple(fact for cell in tokens[index : index + consumed] for fact in cell.facts)
+            facts = tuple(fact for cell in tokens[index: index + consumed] for fact in cell.facts)
             values.append(TableCell(text=text, facts=facts))
             index += consumed
         if len(values) == expected_values:
@@ -528,9 +528,9 @@ def _normalize_value_cell(text: str) -> str:
 
 
 def _to_markdown(
-    columns: list[TableColumn],
-    rows: list[TableRow],
-    footnotes: list[str],
+        columns: list[TableColumn],
+        rows: list[TableRow],
+        footnotes: list[str],
 ) -> str:
     header = "| " + " | ".join(column.label for column in columns) + " |"
     separator = "| " + " | ".join("---" for _ in columns) + " |"

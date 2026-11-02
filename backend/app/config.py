@@ -18,13 +18,14 @@ class Settings(BaseSettings):
     supabase_service_role_key: str
     database_url: str
 
-    openai_api_key: str
-    openai_embedding_model: str = "text-embedding-3-small"
-    openai_embedding_dimensions: int = 1536
-    openai_chat_model: str = "gpt-5.5"
-    openai_grounding_model: str = "gpt-4.1-mini"
-    openai_agent_request_limit: int = 20
-    openai_agent_temperature: float = 0.0
+    gemini_api_key: str
+    gemini_embedding_model: str = "text-embedding-3-small"
+    gemini_embedding_dimensions: int = 1536
+    gemini_chat_model: str = "gpt-5.5"
+    gemini_grounding_model: str = "gpt-4.1-mini"
+    gemini_agent_request_limit: int = 20
+    gemini_agent_temperature: float = 0.0
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
 
     retrieval_candidate_k: int = 50
     retrieval_top_k: int = 10

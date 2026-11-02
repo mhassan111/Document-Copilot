@@ -109,7 +109,7 @@ class FtsKeywordExtraction(BaseModel):
 
 
 def _client() -> OpenAI:
-    return OpenAI(api_key=settings.openai_api_key)
+    return OpenAI(base_url=settings.gemini_base_url, api_key=settings.gemini_api_key)
 
 
 def _token_count(query: str) -> int:
@@ -147,7 +147,7 @@ def _phrases_in_query(query: str) -> list[str]:
         start = lowered.find(phrase)
         if start == -1:
             continue
-        found.append(query[start : start + len(phrase)])
+        found.append(query[start: start + len(phrase)])
     return found
 
 
@@ -188,10 +188,10 @@ def _apply_word_budget(words: list[str]) -> list[str]:
 
 
 def _merge_fts_words(
-    query: str,
-    llm_terms: list[str],
-    *,
-    filters: SearchFilters | None,
+        query: str,
+        llm_terms: list[str],
+        *,
+        filters: SearchFilters | None,
 ) -> list[str]:
     caps = _capitalized_tokens(query, filters=filters)
     phrases = _phrases_in_query(query)
@@ -239,9 +239,9 @@ def _build_user_message(query: str, filters: SearchFilters | None) -> str:
 
 
 def extract_fts_keywords(
-    query: str,
-    *,
-    filters: SearchFilters | None = None,
+        query: str,
+        *,
+        filters: SearchFilters | None = None,
 ) -> str:
     """Return a space-joined keyword string for plainto_tsquery."""
     stripped = query.strip()

@@ -55,7 +55,7 @@ def main() -> None:
         user_id=uuid.uuid4(),
     )
 
-    print(f"Model: {settings.openai_chat_model}", flush=True)
+    print(f"Model: {settings.gemini_chat_model}", flush=True)
     print(f"Query ({QUERY_KEY}): {query}\n", flush=True)
 
     answer = prune_unreferenced_citations(run_document_agent(query, deps))
